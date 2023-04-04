@@ -99,3 +99,5 @@ function str = rf(xval, yval)
     funs = strsubst(funs,'abs(y⁶)', '|y⁶|');    
     str = funs;
 endfunction
+
+metodoEuler(5, 10, 0.5);
