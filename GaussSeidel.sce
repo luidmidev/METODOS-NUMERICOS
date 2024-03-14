@@ -1,3 +1,8 @@
+
+function r = eval(str)
+    r = evstr(str)
+endfunction
+
 function solucion = gaussSeidel(coe, ind, errarg)
     if  size(coe, 1) == size(coe, 2) then
         if size(coe, 1) == size(ind, 1) then
@@ -32,8 +37,7 @@ function solucion = gaussSeidel(coe, ind, errarg)
                         disp(rtext);
                     end
                     err = abs((valuesx(1, 1) - aux)/valuesx(1, 1)) * 100;
-                    errtext = "Er = |" + string(valuesx(1, 1)) + " - " + string(aux) + "|/|" + string(valuesx(1, 1)) +...
-                    "| * 100 = " + string(err);
+                    errtext = "Er = |" + string(valuesx(1, 1)) + " - " + string(aux) + "|/|" + string(valuesx(1, 1)) + "| * 100 = " + string(err);
                     disp(errtext)
                 end
                 disp(frc(sol))
@@ -88,3 +92,21 @@ function y = mfrc(n)
     end
     y = text
 endfunction
+
+
+
+ disp ('- test inputdlg with prescribed scalar (2 lines per text field) and defaults.');
+ prompt = {'Width', 'Height', 'Depth'};
+ default = {'1.1', '2.2', '3.3'};
+ rc = 1;
+ dims = inputdlg (prompt, 'Enter Box Dimensions', rc, default);
+ if (isempty (dims))
+   helpdlg ('Canceled by user', 'Information');
+ else
+   volume  = str2num (dims{1}) * str2num (dims{2}) * str2num (dims{3});
+   surface = 2 * (str2num (dims{1}) * str2num (dims{2}) + ...
+                  str2num (dims{2}) * str2num (dims{3}) + ...
+                  str2num (dims{1}) * str2num (dims{3}));
+    helpdlg (sprintf ('Results:\nVolume = %.3f\nSurface = %.3f', ...
+                      volume, surface), 'Box Dimensions');
+ endif

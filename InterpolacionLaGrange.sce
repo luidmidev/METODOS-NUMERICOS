@@ -5,6 +5,7 @@ function R =interpolacionLagrange(xValues, yValues)
     // grado n-1 que contiene a todos los x1,x2, ..., xn
     format(8);
     x = poly(0, "x");
+    disp(x)
     
     plot(xValues, yValues, "r*");
     gca().grid=[1 1 1];
@@ -12,20 +13,24 @@ function R =interpolacionLagrange(xValues, yValues)
     if length(xValues) == length(xValues) then
         disp("Encontrar el polinomio de interpolación de Lagrange de los siguientes datos: ");
         data = [["x" string(xValues)]; ["y" string(yValues)]];
-        disp(tablificar(data));
+        disp(make_table(data));
         len = length(xValues);
         /////////////////////////////////////////////
         //Armamos los polinimios a ser implementados
         /////////////////////////////////////////////
-        polyStr = string(zeros(3, len));
+        polyStr = string(zeros(3, len)); 
         for i = 1 : prod(size(polyStr));
             polyStr(i) = "";
         end
-        polonimios = zeros(1, len);
-        pols = []
-        for i = 1 : len
-            pols = [pols, x - xValues(i)]
+        
+        polonimios = zeros(1, len); ///
+        pols = [] ///
+        for i = 1 : len ///
+            pols = [pols, x - xValues(i)] ///
+
         end
+                    disp(pols)
+                    
         for k = 1 : len
             disp("k = " + string(k));
             polRstr = string(zeros(3, 5));
@@ -40,33 +45,34 @@ function R =interpolacionLagrange(xValues, yValues)
             rPol = 1;
             rDen = 1;
             
-            for i = 1: len
-                if i <> k then
+            for i = 1: len ///
+                if i <> k then ///
                     rPol = rPol * pols(i);///
                     rDen = rDen * (xValues(k) - xValues(i));///
                     pnum = pnum + "(" + string(pols(i)) + ")";
                     pden = pden + "(" + string(xValues(k)) + " - (" + string(xValues(i)) + "))";
                 end
             end
+            
             if length(pnum) >= length(pden) then
-                polRstr(2, 3) = lineDraw(pnum);
+                polRstr(2, 3) = make_line(pnum);
             else
-                polRstr(2, 3) = lineDraw(pden);
+                polRstr(2, 3) = make_line(pden);
             end
             
             polRstr(1, 3) = pnum;
             polRstr(3, 3) = pden;
             polRstr(1, 5) = string(rPol);
-            polRstr(2, 5) = lineDraw(string(rPol));
+            polRstr(2, 5) = make_line(string(rPol));
             polRstr(3, 5) = string(rDen);
             
             disp(polRstr);
             
             polyStr(1, k) = string(rPol);
-            polyStr(2, k) = lineDraw(string(rPol));
+            polyStr(2, k) = make_line(string(rPol));
             polyStr(3, k) = string(rDen);
             
-            polinomios(1, k) = rPol/rDen;
+            polinomios(1, k) = rPol/rDen; ///
         end
 
         pStr = "p(x) = y1L1(x) ";
@@ -81,18 +87,20 @@ function R =interpolacionLagrange(xValues, yValues)
         end
         disp(pStr);
         
-        polyR = 0;
-        for i = 1 : len
-            polyR = polyR + yValues(i)*polinomios(1, i);
+        polyR = 0; ///
+        for i = 1 : len ///
+            polyR = polyR + yValues(i)*polinomios(1, i); ///
         end
+        
         disp("P(x) = " + string(polyR));
-        R = polyR;
+        
+        R = polyR; ///
     else
         disp("Los datos no son homogeneos")
     end
 endfunction
 
-function rs = lineDraw(str)
+function rs = make_line(str)
     cadena = "";
     for i = 1 : length(str)
         cadena = cadena + "─";
@@ -108,7 +116,7 @@ function rs = lineDr(num)
     rs = cadena;
 endfunction
 
-function tabla = tablificar(t)
+function tabla = make_table(t)
     
     [n, m] = size(t);
     t = string(t);
@@ -163,7 +171,7 @@ function tabla = tablificar(t)
             end
         end
         for i = 1 : 2 : 2 * n + 1
-            R(i, j) = lineDraw(auxA);
+            R(i, j) = make_line(auxA);
         end
     end
     tabla = R;

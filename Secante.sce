@@ -2,7 +2,7 @@
 // Date of creation: 28/11/2021
 
 function y=f(x)
-    y=x^x-3 + 25;
+    y= %e ^ sqrt(1 * x - 2) - 10
 endfunction
 
 function secante(tend, x0, x1)
